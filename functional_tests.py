@@ -1,12 +1,19 @@
-# Import the `webdriver` module from the Selenium library
 from selenium import webdriver
+import unittest
 
-# Create a new instance of the Firefox WebDriver
-browser = webdriver.Chrome()
-
-# Instruct the browser to navigate to the URL 'http://localhost:8000',
-# which is a local server hosting a web application.
-browser.get('http://localhost:8000')
-
-# Check whether the string 'Django' is present in the title of the current web page.
-assert(browser.title)
+class NewVisitorTest(unittest.TestCase):
+    def setUp(self):
+        self.browser = webdriver.Chrome()
+        
+    def tearDown(self):
+        self.browser.quit()
+        
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        # Edith has heard about a cool new online to-do app. She goes
+        # to check out its homepage
+        self.browser.get('http://localhost:8000')
+        self.assertIn('To-Do', self.browser.title)
+        self.fail('Finish the test!')
+        
+if __name__ == '__main__':
+    unittest.main()
